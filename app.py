@@ -8,29 +8,24 @@ st.set_page_config(
     layout="wide"
 )
 
+# Load model
+model = joblib.load("model.pkl")
+
+# Header
 st.markdown("""
 # 🎓 Student Academic Performance Prediction System
 ### Machine Learning Based Student Performance Analytics Dashboard
 """)
 
-model = joblib.load("model.pkl")
-
-# ---------------- SIDEBAR ----------------
+# Sidebar
 st.sidebar.title("🎓 Navigation")
-
-user = st.sidebar.text_input("Username")
-pwd = st.sidebar.text_input("Password", type="password")
-
-if user != "admin" or pwd != "1234":
-    st.warning("Login using admin / 1234")
-    st.stop()
 
 page = st.sidebar.radio(
     "Select Page",
     ["Dashboard", "Graphs", "Prediction"]
 )
 
-# ---------------- DASHBOARD ----------------
+# ================= DASHBOARD =================
 if page == "Dashboard":
 
     col1, col2, col3 = st.columns(3)
@@ -39,29 +34,33 @@ if page == "Dashboard":
     col2.metric("R² Score", "0.805")
     col3.metric("Dataset Size", "395 Students")
 
-    st.subheader("Model Comparison")
+    st.markdown("---")
+
+    st.subheader("📊 Model Comparison")
     st.image("eval_model_comparison.png")
 
-    st.subheader("Feature Importance")
+    st.subheader("🔥 Feature Importance")
     st.image("eval_feature_importance.png")
 
-# ---------------- GRAPHS ----------------
+# ================= GRAPHS =================
 elif page == "Graphs":
 
-    st.subheader("Correlation Heatmap")
+    st.subheader("📈 Correlation Heatmap")
     st.image("eda_correlation_heatmap.png")
 
-    st.subheader("Attendance vs Grade")
+    st.subheader("📉 Attendance vs Grade")
     st.image("eda_attendance_vs_grade.png")
 
-    st.subheader("Predicted vs Actual")
+    st.subheader("🎯 Predicted vs Actual")
     st.image("eval_predicted_vs_actual.png")
 
-    st.subheader("Residual Analysis")
+    st.subheader("📋 Residual Analysis")
     st.image("eval_residuals.png")
 
-# ---------------- PREDICTION ----------------
+# ================= PREDICTION =================
 elif page == "Prediction":
+
+    st.subheader("🎯 Student Performance Prediction")
 
     attendance_rate = st.slider("Attendance Rate", 0.0, 1.0, 0.80)
     avg_internal_score = st.slider("Average Internal Score", 0.0, 20.0, 10.0)
@@ -132,3 +131,6 @@ elif page == "Prediction":
         prediction = model.predict(data)[0]
 
         st.success(f"🎯 Predicted Final Grade (G3): {prediction:.2f}/20")
+
+st.markdown("---")
+st.caption("Developed by Priyanshu | Student Academic Performance Prediction System")
