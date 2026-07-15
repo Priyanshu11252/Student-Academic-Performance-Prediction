@@ -1,0 +1,6 @@
+Model,R2 (test),MAE (test),RMSE (test),CV R2 mean,CV R2 std
+Random Forest,0.805,1.164,1.9994,0.8633,0.0598
+Gradient Boosting,0.7845,1.2638,2.1021,0.8525,0.0671
+Lasso Regression,0.7821,1.3919,2.1137,0.8281,0.0356
+Ridge Regression,0.7296,1.664,2.3547,0.8086,0.0472
+Linear Regression,0.7277,1.6753,2.3628,0.8079,0.0479

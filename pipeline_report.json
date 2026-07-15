@@ -1,0 +1,102 @@
+{
+  "raw_shape": [
+    395,
+    33
+  ],
+  "cleaning_log": [
+    "Removed 0 duplicate rows.",
+    "Missing values found: 0 (imputed numeric->median, categorical->mode).",
+    "Capped 15 outliers in 'absences' to [-12.0, 20.0] (IQR method).",
+    "Capped 0 outliers in 'G1' to [0.5, 20.5] (IQR method).",
+    "Capped 13 outliers in 'G2' to [3.0, 19.0] (IQR method).",
+    "Final cleaned shape: (395, 33)"
+  ],
+  "cleaned_shape": [
+    395,
+    33
+  ],
+  "feature_log": [
+    "attendance_rate = 1 - (absences / 180 school days), clipped to [0,1]",
+    "avg_internal_score = mean(G1, G2)  [internal assessment aggregate]",
+    "score_trend = G2 - G1  [improving(+) vs declining(-) trend]",
+    "score_consistency = std(G1, G2)  [volatility across assessment periods]",
+    "study_effort_index = 0.5*studytime + 0.5*(1 - failures/3)",
+    "lifestyle_risk_index = Dalc + Walc + goout - health",
+    "parent_edu_avg = mean(Medu, Fedu)",
+    "support_score = schoolsup + famsup + paid (count of support systems)",
+    "Binary-encoded yes/no indicators (schoolsup, famsup, paid, activities, nursery, higher, internet, romantic)"
+  ],
+  "eda_stats": {
+    "target_correlation_with_G3": {
+      "G3": 1.0,
+      "G2": 0.9057801135770055,
+      "avg_internal_score": 0.8809701338320778,
+      "G1": 0.8014679320174144,
+      "parent_edu_avg": 0.20522443411453842,
+      "study_effort_index": 0.18727593303607706,
+      "studytime": 0.09781968965319622,
+      "absences": 0.06802968416584237,
+      "support_score": 0.004546922335769885,
+      "health": -0.06133460487712117,
+      "lifestyle_risk_index": -0.061638995508432125,
+      "attendance_rate": -0.06802968416584258,
+      "goout": -0.13279147350332884,
+      "failures": -0.3604149404616496
+    }
+  },
+  "model_results": [
+    {
+      "Model": "Random Forest",
+      "R2 (test)": 0.805,
+      "MAE (test)": 1.164,
+      "RMSE (test)": 1.9994,
+      "CV R2 mean": 0.8633,
+      "CV R2 std": 0.0598
+    },
+    {
+      "Model": "Gradient Boosting",
+      "R2 (test)": 0.7845,
+      "MAE (test)": 1.2638,
+      "RMSE (test)": 2.1021,
+      "CV R2 mean": 0.8525,
+      "CV R2 std": 0.0671
+    },
+    {
+      "Model": "Lasso Regression",
+      "R2 (test)": 0.7821,
+      "MAE (test)": 1.3919,
+      "RMSE (test)": 2.1137,
+      "CV R2 mean": 0.8281,
+      "CV R2 std": 0.0356
+    },
+    {
+      "Model": "Ridge Regression",
+      "R2 (test)": 0.7296,
+      "MAE (test)": 1.664,
+      "RMSE (test)": 2.3547,
+      "CV R2 mean": 0.8086,
+      "CV R2 std": 0.0472
+    },
+    {
+      "Model": "Linear Regression",
+      "R2 (test)": 0.7277,
+      "MAE (test)": 1.6753,
+      "RMSE (test)": 2.3628,
+      "CV R2 mean": 0.8079,
+      "CV R2 std": 0.0479
+    }
+  ],
+  "best_model": "Random Forest",
+  "top_features": {
+    "avg_internal_score": 0.752688399347783,
+    "attendance_rate": 0.06103192759567637,
+    "absences": 0.05876221830985469,
+    "score_trend": 0.04186725613132913,
+    "reason_home": 0.013568819125410364,
+    "age": 0.012303899752362605,
+    "famrel": 0.005547452934759694,
+    "lifestyle_risk_index": 0.004166732425909541,
+    "health": 0.003548171854479131,
+    "reason_course": 0.003297271190838733
+  }
+}
